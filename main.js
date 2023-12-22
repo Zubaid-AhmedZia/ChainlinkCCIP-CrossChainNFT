@@ -350,7 +350,188 @@ const contractABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-]; // Your contract's ABI
+]; // chainlink VRF NFT Contract abi
+const SourceMinterABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "router",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "link",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "target",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "FailedToWithdrawEth",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "messageId",
+        type: "bytes32",
+      },
+    ],
+    name: "MessageSent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferRequested",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "acceptOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "destinationChainSelector",
+        type: "uint64",
+      },
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        internalType: "enum SourceMinter.PayFeesIn",
+        name: "payFeesIn",
+        type: "uint8",
+      },
+    ],
+    name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "beneficiary",
+        type: "address",
+      },
+    ],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "beneficiary",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+    ],
+    name: "withdrawToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
+  },
+];
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 let signer;
 
@@ -368,6 +549,27 @@ document.getElementById("requestNft").addEventListener("click", async () => {
 
   try {
     const tx = await contract.requestNft({ value: fee });
+    await tx.wait();
+    console.log("NFT request sent!");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+document.getElementById("mintNft").addEventListener("click", async () => {
+  //const fee = ethers.utils.parseEther(document.getElementById("nftFee").value);
+  const contractAddress = "0xb6adab62ebc0cf67a69931E6aCef0F067E8A8828";
+
+  const contract = new ethers.Contract(
+    contractAddress,
+    SourceMinterABI,
+    signer
+  );
+  const destinationChainSelector = "12532609583862916517";
+  const receiver = "0xB29ACBC88ce5bfd477A7A4E8C04A820011701BB1";
+
+  try {
+    const tx = await contract.mint(destinationChainSelector, receiver, 0);
     await tx.wait();
     console.log("NFT request sent!");
   } catch (error) {
