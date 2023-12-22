@@ -11,14 +11,33 @@
     <header>
       <h1>Chainlink Marine</h1>
       <button id="connectWallet">Connect Wallet</button>
+      <h3>
+        Please Connect your wallet to Seplia testnet for crosschain minting
+      </h3>
     </header>
     <main>
       <div>
+        <h2>Mint VRF Random NFT</h2>
         <input type="text" id="nftFee" placeholder="Enter fee in ETH" />
-        <button id="requestNft">Request NFT</button>
+        <button id="requestNft">Request VRF NFT</button>
       </div>
       <div>
+        <h2>Mint NFT from Sepolia(Ethereum) to Polygon mumbai(Polygon)</h2>
         <button id="mintNft">Mint crosschain NFT</button>
+      </div>
+      <div class="link-container">
+        <h2>
+          Go to
+          <a href="https://testnets.opensea.io/" class="opensea-link"
+            >opensea</a
+          >
+          and connect your wallet to see one of these in your collection!
+        </h2>
+      </div>
+      <div class="nft-images">
+        <img src="nature.jpg" alt="NFT Image 1" />
+        <img src="shadow.jpg" alt="NFT Image 2" />
+        <img src="artificial.jpg" alt="NFT Image 3" />
       </div>
     </main>
     <script src="main.js"></script>

@@ -566,7 +566,7 @@ document.getElementById("mintNft").addEventListener("click", async () => {
     signer
   );
   const destinationChainSelector = "12532609583862916517";
-  const receiver = "0xB29ACBC88ce5bfd477A7A4E8C04A820011701BB1";
+  const receiver = "0xbaDb6e74509492145435b3cE0d4092Ca52099789";
 
   try {
     const tx = await contract.mint(destinationChainSelector, receiver, 0);
