@@ -16,15 +16,27 @@
       </h3>
     </header>
     <main>
-      <div>
+      <!-- <div>
         <h2>Mint VRF Random NFT</h2>
         <input type="text" id="nftFee" placeholder="Enter fee in ETH" />
         <button id="requestNft">Request VRF NFT</button>
+      </div> -->
+      <div>
+        <h2>Whitelist Users</h2>
+        <input type="text" id="userAddress" placeholder="Enter user address e.g 0x67....45c" />
+        <input type="text" id="status" placeholder="Enter true or false" />
+        <button id="setWhitelist">Grant Whitelist</button>
       </div>
       <div>
         <h2>Mint NFT from Sepolia(Ethereum) to Polygon mumbai(Polygon)</h2>
+        <input type="text" id="userAddressTomint" placeholder="Enter user address e.g 0x67....45c" />
         <button id="mintNft">Mint crosschain NFT</button>
       </div>
+      <!-- <div>
+        <h2>Mint NFT from Polygon mumbai(Polygon) to Sepolia(Ethereum)</h2>
+        <input type="text" id="userAddressTomintOnPolygon" placeholder="Enter user address e.g 0x67....45c" />
+        <button id="mintNft">Mint crosschain NFT</button>
+      </div> -->
       <div class="link-container">
         <h2>
           Go to
