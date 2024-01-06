@@ -1081,21 +1081,21 @@ document.getElementById("connectWallet").addEventListener("click", async () => {
 });
 
 //only vrf nft mint, not realted to ccip
-document.getElementById("requestNft").addEventListener("click", async () => {
-  const fee = ethers.utils.parseEther(document.getElementById("nftFee").value);
+// document.getElementById("requestNft").addEventListener("click", async () => {
+//   const fee = ethers.utils.parseEther(document.getElementById("nftFee").value);
   
-  const contractAddress = "0x2fd7692A6A8A41d6f602a10F1C71025f05024E50";
+//   const contractAddress = "0x2fd7692A6A8A41d6f602a10F1C71025f05024E50";
 
-  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+//   const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-  try {
-    const tx = await contract.requestNft({ value: fee });
-    await tx.wait();
-    console.log("NFT request sent!");
-  } catch (error) {
-    console.error(error);
-  }
-});
+//   try {
+//     const tx = await contract.requestNft({ value: fee });
+//     await tx.wait();
+//     console.log("NFT request sent!");
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
 
 document.getElementById("setWhitelist").addEventListener("click", async () => {
   const userAddress = document.getElementById("userAddress").value;
@@ -1136,24 +1136,24 @@ document.getElementById("mintNft").addEventListener("click", async () => {
   }
 });
 
-document.getElementById("mintNft").addEventListener("click", async () => {
-  const userAddress = document.getElementById("userAddressTomintOnPolygon").value;
+// document.getElementById("mintNft").addEventListener("click", async () => {
+//   const userAddress = document.getElementById("userAddressTomintOnPolygon").value;
 
-  const contractAddress = "0x085Ef82658B7039A998D656E76c98e673B32F63B"; //source minter contract address
+//   const contractAddress = "0x085Ef82658B7039A998D656E76c98e673B32F63B"; //source minter contract address
 
-  const contract = new ethers.Contract(
-    contractAddress,
-    SourceMinterABI,
-    signer
-  );
-  const destinationChainSelector = "16015286601757825753"; //sepolia
-  const receiver = "0x573Cd7460A25bFdF3BB20D28Df7380de1c327af8";
+//   const contract = new ethers.Contract(
+//     contractAddress,
+//     SourceMinterABI,
+//     signer
+//   );
+//   const destinationChainSelector = "16015286601757825753"; //sepolia
+//   const receiver = "0x573Cd7460A25bFdF3BB20D28Df7380de1c327af8";
 
-  try {
-    const tx = await contract.mint(destinationChainSelector, receiver, 0, userAddress);
-    await tx.wait();
-    console.log("NFT request sent!");
-  } catch (error) {
-    console.error(error);
-  }
-});
+//   try {
+//     const tx = await contract.mint(destinationChainSelector, receiver, 0, userAddress);
+//     await tx.wait();
+//     console.log("NFT request sent!");
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
