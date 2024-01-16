@@ -1087,11 +1087,15 @@ document.getElementById("connectWallet").addEventListener("click", async () => {
 
       // Define the desired network (Sepolia testnet)
       const desiredNetwork = {
-        chainId: 11155111, // Chain ID for Sepolia testnet
+        chainId: 11155111,
+        chainId2: 80001, // Chain ID for Sepolia testnet
       };
 
       // Check if the current network matches the desired network
-      if (network.chainId !== desiredNetwork.chainId) {
+      if (
+        network.chainId !== desiredNetwork.chainId &&
+        network.chainId !== desiredNetwork.chainId2
+      ) {
         // Request a network switch
         await provider.send("wallet_switchEthereumChain", [
           { chainId: ethers.utils.hexValue(desiredNetwork.chainId) },
@@ -1101,7 +1105,9 @@ document.getElementById("connectWallet").addEventListener("click", async () => {
       // Connect the wallet
       await provider.send("eth_requestAccounts", []);
 
-      console.log("Wallet connected to Sepolia!");
+      console.log(
+        `Wallet connected to ${getNetworkNameFromChainId(network.chainId)}`
+      );
 
       // Update UI to reflect the connection
       document.getElementById("connectWallet").style.backgroundColor = "green";
@@ -1138,6 +1144,28 @@ document.getElementById("setWhitelist").addEventListener("click", async () => {
     const tx = await contract.setWhitelist(userAddress, status);
     await tx.wait();
     console.log("User Whitelisted");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+document.getElementById("getWhitelist").addEventListener("click", async () => {
+  const userAddress = document.getElementById("WhitelistedUserAddress").value;
+  console.log(userAddress);
+
+  const contractAddress = "0xfd67328EAE189531ca15a5925aCEdE2aDa2130c1"; //nft contract address
+
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+  try {
+    const isWhitelisted = await contract.whitelist(userAddress);
+    console.log(isWhitelisted);
+
+    // Display status below the div
+    const whitelistStatusElement = document.getElementById("whitelistStatus");
+    whitelistStatusElement.innerHTML = isWhitelisted
+      ? "<div style='background-color: green; color: white; padding: 5px; width: 100px; margin: auto;'>Whitelisted</div>"
+      : "<div style='background-color: red; color: black; padding: 5px; width: 100px; margin: auto;'>Not Whitelisted</div>";
   } catch (error) {
     console.error(error);
   }
@@ -1195,3 +1223,12 @@ document.getElementById("mintNft").addEventListener("click", async () => {
   };
 });
 
+function getNetworkNameFromChainId(chainId) {
+  const networkNames = {
+    11155111: "sepolia",
+    80001: "polygon mumbai",
+    // Add more as needed
+  };
+
+  return networkNames[chainId] || "unknown";
+}
