@@ -12,6 +12,11 @@ const contractABI = [
     type: "constructor",
   },
   {
+    inputs: [],
+    name: "Already_Whitelisted",
+    type: "error",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -337,6 +342,19 @@ const contractABI = [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "Whitelisted",
+    type: "event",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -503,6 +521,19 @@ const contractABI = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getWhitelistedUsers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
       },
     ],
     stateMutability: "view",
@@ -879,6 +910,25 @@ const contractABI = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "whitelistedAddresses",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "withdraw",
     outputs: [],
@@ -1136,7 +1186,7 @@ document.getElementById("setWhitelist").addEventListener("click", async () => {
   const userAddress = document.getElementById("userAddress").value;
   const status = document.getElementById("status").value;
 
-  const contractAddress = "0xfd67328EAE189531ca15a5925aCEdE2aDa2130c1"; //nft contract address
+  const contractAddress = "0x0cCE6a8c4cE7bB8198a3404afBf74e52f65bFCEF"; //nft contract address
 
   const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
@@ -1149,11 +1199,12 @@ document.getElementById("setWhitelist").addEventListener("click", async () => {
   }
 });
 
+// Enter user waller address and get true or false.
 document.getElementById("getWhitelist").addEventListener("click", async () => {
   const userAddress = document.getElementById("WhitelistedUserAddress").value;
   console.log(userAddress);
 
-  const contractAddress = "0xfd67328EAE189531ca15a5925aCEdE2aDa2130c1"; //nft contract address
+  const contractAddress = "0x0cCE6a8c4cE7bB8198a3404afBf74e52f65bFCEF"; //nft contract address 0xfd67328EAE189531ca15a5925aCEdE2aDa2130c1 old
 
   const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
@@ -1171,6 +1222,35 @@ document.getElementById("getWhitelist").addEventListener("click", async () => {
   }
 });
 
+document
+  .getElementById("getWhitelistAddresses")
+  .addEventListener("click", async () => {
+    const contractAddress = "0x0cCE6a8c4cE7bB8198a3404afBf74e52f65bFCEF"; //nft contract address 0xfd67328EAE189531ca15a5925aCEdE2aDa2130c1 old
+
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+    try {
+      const addresses = await contract.getWhitelistedUsers();
+      console.log(addresses);
+
+      const whitelistElement = document.getElementById("whitelistAddresses");
+
+      // Clear previous content
+      whitelistElement.innerHTML = "";
+
+      // Check if there are whitelisted addresses
+      if (addresses.length > 0) {
+        addresses.forEach((address) => {
+          whitelistElement.innerHTML += `<div>${address}</div>`;
+        });
+      } else {
+        whitelistElement.innerHTML = "<p>No Whitelisted Addresses</p>";
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
 document.getElementById("mintNft").addEventListener("click", async () => {
   const userAddress = document.getElementById("userAddressTomint").value;
 
@@ -1182,7 +1262,7 @@ document.getElementById("mintNft").addEventListener("click", async () => {
     signer
   );
   const destinationChainSelector = "12532609583862916517"; //mumbai
-  const receiver = "0xd3Ae312CD8289821014C5b6326668c58614A16cE";
+  const receiver = "0x6e92F24b7e246A9B71004297FF16Ceb0D10B0a59"; //0xd3Ae312CD8289821014C5b6326668c58614A16cE old
   try {
     const tx = await contract.mint(
       destinationChainSelector,

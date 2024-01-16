@@ -36,15 +36,26 @@
         <button id="mintNft">Mint crosschain NFT</button>
       </div>
       <div>
-        <h2>Get Whitelisted Users</h2>
+        <h2>Check Whitelisted Users</h2>
         <input
           type="text"
           id="WhitelistedUserAddress"
           placeholder="Enter user address e.g 0x67....45c"
         />
-        <button id="getWhitelist">Request Whitelisted Users</button>
+        <button id="getWhitelist">Check</button>
       </div>
       <div id="whitelistStatus"></div>
+
+      <div>
+        <h2>Get Whitelisted Users Addresses</h2>
+        <button id="getWhitelistAddresses">Get Addresses</button>
+      </div>
+
+      <div
+        id="whitelistAddresses"
+        style="margin: 20px; padding: 20px; background-color: white"
+      ></div>
+
       <div id="myModal" class="modal">
         <div class="modal-content">
           <span id="closeModal" class="close">&times;</span>
